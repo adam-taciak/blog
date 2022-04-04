@@ -29,10 +29,13 @@ jobs:
     - run: yarn
     - run: yarn build
     
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+    - name: deploy file to server
+      uses: wlixcc/SFTP-Deploy-Action@v1.0
       with:
-        server: ${{ secrets.ftp_host }}
-        username: ${{ secrets.ftp_user }}
-        password: ${{ secrets.ftp_password }}
+        username: '${{ secrets.SSH_USER }}'
+        server: '${{ secrets.SSH_HOST }}'
+        ssh_private_key: ${{ secrets.SSH_KEY }}
+        local_path: './public/*'
+        remote_path: '~/domains/taciak.net/public_html/'
+        args: '-o ConnectTimeout=5'
 
