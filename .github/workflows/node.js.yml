@@ -29,13 +29,12 @@ jobs:
     - run: yarn
     - run: yarn build
     
-    - name: deploy file to server
-      uses: wlixcc/SFTP-Deploy-Action@v1.0
+    - name: Publish
+      uses: nogsantos/scp-deploy@master
       with:
-        username: '${{ secrets.SSH_USER }}'
-        server: '${{ secrets.SSH_HOST }}'
-        ssh_private_key: ${{ secrets.SSH_KEY }}
-        local_path: './public/*'
-        remote_path: '~/domains/taciak.net/public_html/'
-        args: '-o ConnectTimeout=5'
-
+        src: ./public/*
+        host: ${{ secrets.SSH_HOST }}
+        remote: ${{ secrets.SSH_DIR }}
+        port: ${{ secrets.SSH_PORT }}
+        user: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
