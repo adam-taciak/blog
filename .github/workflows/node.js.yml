@@ -28,13 +28,11 @@ jobs:
         cache: 'npm'
     - run: yarn
     - run: yarn build
-    - name: Publish
-      uses: nogsantos/scp-deploy@master
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
       with:
-        src: ./public/*
-        host: ${{ secrets.SSH_HOST }}
-        remote: ${{ secrets.SSH_DIR }}
-        port: ${{ secrets.SSH_PORT }}
-        user: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
+        server: ${{ secrets.ftp_host }}
+        username: ${{ secrets.ftp_user }}
+        password: ${{ secrets.ftp_password }}
 
